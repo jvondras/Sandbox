@@ -25,6 +25,7 @@ int main()
     int array_number = 0;
     while(fgets(buffer,100,input) != NULL) //Begin reading in file
     {
+        printf("Buffer contents: %s\n",buffer);
         int count = 0;
         token = strtok(buffer,",");
             while(token)
@@ -33,12 +34,14 @@ int main()
                 {
                     strcpy(assignments[array_number].class_name,token);
                     count++;
+                    printf("Class Name: %s\n",token);
                     token = strtok(NULL,",");
                 }
                 else if(count == 1) //assignment name
                 {
                     strcpy(assignments[array_number].assignment_name,token);
                     count++;
+                    printf("Assignment Name: %s\n",token);
                     token = strtok(NULL,",");
                 }
                 else if(count == 2) //Due date
@@ -46,41 +49,41 @@ int main()
                     char* time_token;
                     time_token = strtok(token,"/");
                     struct tm time;
+                    memset(&time, 0, sizeof(struct tm));
+                    time.tm_sec = 0;
+                    time.tm_min = 0;
                     int time_count = 0;
                     while(time_token)
                     {
                         if(time_count == 0)
                         {
-                            time.tm_mon = atoi(time_token);
-                            time_token = strtok(NULL,"/");
-                            time_count++;
+                            time.tm_mon = atoi(time_token) - 1;
+                            printf("Month: %s\n",time_token);
                         }
                         else if(time_count == 1)
                         {
                             time.tm_mday = atoi(time_token);
-                            time_token = strtok(NULL,"/");
-                            time_count++;
+                            printf("Day: %s\n",time_token);
                         }
                         else if(time_count == 2)
                         {
-                            time.tm_year = atoi(time_token);
-                            time_token = strtok(NULL,"/");
-                            time_count++;
+                            time.tm_year = atoi(time_token) - 1900;
+                            printf("Year: %s\n",time_token);
                         }
                         else if(time_count == 3)
                         {
                             time.tm_hour = atoi(time_token);
-                            time_token = strtok(NULL,"/");
-                            time_count++;
+                            printf("Hour: %s\n",time_token);
                         }
+                        time_token = strtok(NULL,"/");
+                        time_count++;
 
                     }
                     assignments[array_number].due = mktime(&time);
-
                     count++;
-                    printf("Token before moving on: %s\n",token);
+                    printf("Token before moving on from time: %s\n",token);
                     token = strtok(NULL,",");
-                    printf("Token after moving on: %s\n",token);
+                    printf("Token after moving on from time: %s\n",token);
                 }
                 else if(count == 3) //status
                 {
@@ -104,7 +107,7 @@ int main()
              printf("=======================\n");
              for(int i = 0; i < array_number; i++)
              {
-                if(strncmp(assignments[i].status,"TODO",4) == 0)
+                if(strncmp(assignments[i].status,"todo",4) == 0)
                 {
                     printf("%s",assignments[i].assignment_name);
                 }
@@ -127,19 +130,19 @@ int main()
 
              fgets(menu_input,10,stdin);
 
-             if(menu_input == 1)
+             if(atoi(menu_input) == 1)
              {
 
              }
-             else if(menu_input == 2)
+             else if(atoi(menu_input) == 2)
              {
 
              }
-             else if(menu_input == 3)
+             else if(atoi(menu_input) == 3)
              {
 
              }
-             else if(menu_input == 4)
+             else if(atoi(menu_input) == 4)
              {
 
              }
