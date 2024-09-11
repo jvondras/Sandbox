@@ -85,15 +85,29 @@ int main()
     }
     int x = 0;
     char menu_input[10];
+    time_t current_time;
     while(x == 0) //Begin main loop
         {
+            time(&current_time);
+            printf("Current Time: %s\n\n",ctime(&current_time));
              printf("To-do:\n");
              printf("=======================\n");
              for(int i = 0; i < line_count; i++)
              {
                 if(strcmp(assignments[i].status,"todo\n") == 0)
                 {
-                    printf("%s\t %s\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    if(difftime(current_time,assignments[i].due) > 604800)
+                    {
+                        printf("%s\t %s\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
+                    else if((difftime(current_time,assignments[i].due) > 86400) && (difftime(current_time,assignments[i].due) < 604800))
+                    {
+                        printf("%s\t %s\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
+                    else if(difftime(current_time,assignments[i].due) < 86400)
+                    {
+                        printf("%s\t %s\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
                 }
              }
              printf("\n\n");
@@ -104,7 +118,18 @@ int main()
              {
                 if(strcmp(assignments[i].status,"completed\n") == 0)
                 {
-                    printf("%s\t %s\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    if(difftime(current_time,assignments[i].due) > 604800) //7 days
+                    {
+                        printf("%s\t %s\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
+                    else if((difftime(current_time,assignments[i].due) > 86400) && (difftime(current_time,assignments[i].due) < 604800)) //greater than 3 days and less then 7 days
+                    {
+                        printf("%s\t %s\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
+                    else if(difftime(current_time,assignments[i].due) < 86400) //less than 3 days
+                    {
+                        printf("%s\t %s\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    }
                 }
              }
              printf("\n\n");
