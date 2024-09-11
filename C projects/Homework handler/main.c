@@ -100,7 +100,7 @@ int main()
              {
                 if(strcmp(assignments[i].status,"todo\n") == 0)
                 {
-                    if(difftime(assignments[i].due,current_time) > 604800)
+                    if(difftime(assignments[i].due,current_time) > 604800) //less then seven days
                     {
                         printf("%s\t %s\t\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
@@ -108,7 +108,7 @@ int main()
                     {
                         printf("%s\t %s\t\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
-                    else if(difftime(assignments[i].due,current_time) < 86400)
+                    else if(difftime(assignments[i].due,current_time) < 86400) //less then three days
                     {
                         printf("%s\t %s\t\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
@@ -133,8 +133,9 @@ int main()
 
              printf("1. Move assignment to completed\n");
              printf("2. Move assignment to TODO\n");
-             printf("3. Change due date\n");
-             printf("4. Remove completed assignments\n");
+             printf("3. Remove completed assignments\n");
+             printf("4. Change due date\n");
+             printf("5. Quit\n");
 
              fgets(menu_input,10,stdin);
 
@@ -180,7 +181,21 @@ int main()
              }
              else if(atoi(menu_input) == 3)
              {
-                 char search[50];
+
+                for(int i = 0; i < line_count;i++)
+                {
+                    if(strcmp("completed\n",assignments[i].status) == 0)
+                    {
+                        strcpy(assignments[i].status,"NULL");//Change time information here
+                    }
+
+                }
+
+             }
+             else if(atoi(menu_input) == 4)
+             {
+
+                char search[50];
                 int found = 0;
                 printf("Enter Assignment Name: \n");
                 fgets(search,50,stdin);
@@ -188,20 +203,43 @@ int main()
                 {
                     if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
                     {
-                        //Change time information here
+                        struct tm new_time;
+                        new_time.tm_year = 1980;
+                        memset(&new_time, 0, sizeof(struct tm));
+                        char buffer_time[10];
+
+                        printf("Enter month:\n");
+                        strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        new_time.tm_mon = atoi(buffer_time) -1;
+                        printf("Enter day:\n");
+                        strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        new_time.tm_mday = atoi(buffer_time);
+                        printf("Enter year:\n");
+                        strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        new_time.tm_year = atoi(buffer_time) - 1900;
+                        printf("Enter Hours (military time):\n");
+                        strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        new_time.tm_hour = atoi(buffer_time) - 1;
+                        printf("Enter Minutes:\n");
+                        strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        new_time.tm_min = atoi(buffer_time);
+                        assignments[i].due = mktime(&new_time);
+                        found = 1;
                     }
 
                 }
+
                 if(found != 1)
                 {
                     printf("Match not found!\n");
                 }
-             }
-             else if(atoi(menu_input) == 4)
-             {
 
              }
+             else if(atoi(menu_input) == 5)
+             {
+                fclose(input);
+                return 0;
+             }
         }
-        fclose(input);
-        return 0;
+
 }
