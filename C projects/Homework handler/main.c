@@ -21,33 +21,30 @@ int main()
     FILE* input;
     input = fopen("homework.txt","r+");
     char* token;
+    char* end_str;
     char buffer[100];
     int array_number = 0;
+    int line_count = 0;
     while(fgets(buffer,100,input) != NULL) //Begin reading in file
     {
-        printf("Buffer contents: %s\n",buffer);
+        line_count++;
         int count = 0;
-        token = strtok(buffer,",");
+        token = strtok_r(buffer,",",&end_str);
             while(token)
             {
+                char* end_tok;
                 if(count == 0) //Class name
                 {
                     strcpy(assignments[array_number].class_name,token);
-                    count++;
-                    printf("Class Name: %s\n",token);
-                    token = strtok(NULL,",");
                 }
                 else if(count == 1) //assignment name
                 {
                     strcpy(assignments[array_number].assignment_name,token);
-                    count++;
-                    printf("Assignment Name: %s\n",token);
-                    token = strtok(NULL,",");
                 }
                 else if(count == 2) //Due date
                 {
                     char* time_token;
-                    time_token = strtok(token,"/");
+                    time_token = strtok_r(token,"/",&end_tok);
                     struct tm time;
                     memset(&time, 0, sizeof(struct tm));
                     time.tm_sec = 0;
@@ -58,70 +55,61 @@ int main()
                         if(time_count == 0)
                         {
                             time.tm_mon = atoi(time_token) - 1;
-                            printf("Month: %s\n",time_token);
                         }
                         else if(time_count == 1)
                         {
                             time.tm_mday = atoi(time_token);
-                            printf("Day: %s\n",time_token);
                         }
                         else if(time_count == 2)
                         {
                             time.tm_year = atoi(time_token) - 1900;
-                            printf("Year: %s\n",time_token);
                         }
                         else if(time_count == 3)
                         {
                             time.tm_hour = atoi(time_token);
-                            printf("Hour: %s\n",time_token);
                         }
-                        time_token = strtok(NULL,"/");
+                        time_token = strtok_r(NULL,"/",&end_tok);
                         time_count++;
 
                     }
                     assignments[array_number].due = mktime(&time);
-                    count++;
-                    printf("Token before moving on from time: %s\n",token);
-                    token = strtok(NULL,",");
-                    printf("Token after moving on from time: %s\n",token);
                 }
                 else if(count == 3) //status
                 {
-                    printf("HELLO");
                     strcpy(assignments[array_number].status,token);
-                    count++;
-                    token = strtok(NULL,",");
-
                 }
-
+                count++;
+                token = strtok_r(NULL,",",&end_str);
             }
             array_number++;
-
     }
-
     int x = 0;
     char menu_input[10];
     while(x == 0) //Begin main loop
         {
-             printf("TODO:\n");
+             printf("To-do:\n");
              printf("=======================\n");
-             for(int i = 0; i < array_number; i++)
+             for(int i = 0; i < line_count; i++)
              {
-                if(strncmp(assignments[i].status,"todo",4) == 0)
+                if(strcmp(assignments[i].status,"todo\n") == 0)
                 {
-                    printf("%s",assignments[i].assignment_name);
+                    printf("%s\t %s\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                 }
              }
+             printf("\n\n");
 
              printf("Completed:\n");
              printf("=======================\n");
-             for(int j = 0; j < array_number; j++)
+                for(int i = 0; i < line_count; i++)
              {
-                if(strncmp(assignments[j].status,"Completed",4) == 0)
+                if(strcmp(assignments[i].status,"completed\n") == 0)
                 {
-
+                    printf("%s\t %s\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                 }
              }
+             printf("\n\n");
+
+
 
              printf("1. Move assignment to complete\n");
              printf("2. Move assignment to TODO\n");
@@ -147,4 +135,6 @@ int main()
 
              }
         }
+        fclose(input);
+        return 0;
 }
