@@ -1,3 +1,7 @@
-Test Class,Test Assignment,9/10/2024/20,todo
-Test Class2,Test2 Assignment,9/10/2025/20,todo
-test class3,test3 assignment,9/11/2004/10,completed
+CSE 1325,Lecture 07 Quiz,9/12/2024/8/0,todo
+CSE 2312,HW 04,9/12/2024/12/30,todo
+HIST 1331,Lesson 2 Quiz,9/13/2024/23/59,todo
+PHYS 1443,Homework 3,9/16/2024/23/59,todo
+PHYS 1443,Homework 3 Bonus,9/16/2024/23/59,todo
+CSE 1325,P04,9/17/2024/8/0,todo
+CSE 1325,Lecture 08 Quiz,9/17/2024/8/0,todo

@@ -8,8 +8,8 @@
 
 struct homework
 {
-    char class_name[100];
-    char assignment_name[100];
+    char class_name[256];
+    char assignment_name[256];
     time_t due;
     char status[25];
 };
@@ -22,7 +22,7 @@ int main()
     input = fopen("homework.txt","r+");
     char* token;
     char* end_str;
-    char buffer[100];
+    char buffer[256];
     int array_number = 0;
     int line_count = 0;
     while(fgets(buffer,100,input) != NULL) //Begin reading in file
@@ -66,7 +66,11 @@ int main()
                         }
                         else if(time_count == 3)
                         {
-                            time.tm_hour = atoi(time_token);
+                            time.tm_hour = atoi(time_token) - 1;
+                        }
+                        else if(time_count == 4)
+                        {
+                            time.tm_min = atoi(time_token);
                         }
                         time_token = strtok_r(NULL,"/",&end_tok);
                         time_count++;
@@ -96,18 +100,19 @@ int main()
              {
                 if(strcmp(assignments[i].status,"todo\n") == 0)
                 {
-                    if(difftime(current_time,assignments[i].due) > 604800)
+                    if(difftime(assignments[i].due,current_time) > 604800)
                     {
-                        printf("%s\t %s\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%s\t %s\t\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
-                    else if((difftime(current_time,assignments[i].due) > 86400) && (difftime(current_time,assignments[i].due) < 604800))
+                    else if((difftime(assignments[i].due,current_time) > 86400) && (difftime(assignments[i].due,current_time) < 604800))
                     {
-                        printf("%s\t %s\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%s\t %s\t\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
-                    else if(difftime(current_time,assignments[i].due) < 86400)
+                    else if(difftime(assignments[i].due,current_time) < 86400)
                     {
-                        printf("%s\t %s\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%s\t %s\t\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
+
                 }
              }
              printf("\n\n");
@@ -118,25 +123,15 @@ int main()
              {
                 if(strcmp(assignments[i].status,"completed\n") == 0)
                 {
-                    if(difftime(current_time,assignments[i].due) > 604800) //7 days
-                    {
-                        printf("%s\t %s\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
-                    }
-                    else if((difftime(current_time,assignments[i].due) > 86400) && (difftime(current_time,assignments[i].due) < 604800)) //greater than 3 days and less then 7 days
-                    {
-                        printf("%s\t %s\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
-                    }
-                    else if(difftime(current_time,assignments[i].due) < 86400) //less than 3 days
-                    {
-                        printf("%s\t %s\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
-                    }
+                    printf("%s\t %s\t\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+
                 }
              }
              printf("\n\n");
 
 
 
-             printf("1. Move assignment to complete\n");
+             printf("1. Move assignment to completed\n");
              printf("2. Move assignment to TODO\n");
              printf("3. Change due date\n");
              printf("4. Remove completed assignments\n");
@@ -145,15 +140,62 @@ int main()
 
              if(atoi(menu_input) == 1)
              {
+                char search[50];
+                int found = 0;
+                printf("Enter Assignment Name: \n");
+                fgets(search,50,stdin);
+                for(int i = 0; i < line_count;i++)
+                {
+                    if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
+                    {
+                        strcpy(assignments[i].status,"completed\n");
+                        found = 1;
+                    }
 
+                }
+                if(found != 1)
+                {
+                    printf("Match not found!\n");
+                }
              }
              else if(atoi(menu_input) == 2)
              {
+                 char search[50];
+                int found = 0;
+                printf("Enter Assignment Name: \n");
+                fgets(search,50,stdin);
+                for(int i = 0; i < line_count;i++)
+                {
+                    if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
+                    {
+                        strcpy(assignments[i].status,"todo\n");
+                        found = 1;
+                    }
 
+                }
+                if(found != 1)
+                {
+                    printf("Match not found!\n");
+                }
              }
              else if(atoi(menu_input) == 3)
              {
+                 char search[50];
+                int found = 0;
+                printf("Enter Assignment Name: \n");
+                fgets(search,50,stdin);
+                for(int i = 0; i < line_count;i++)
+                {
+                    if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
+                    {
+                        //Change time information here
+                    }
 
+                }
+                if(found != 1)
+                {
+                    printf("Match not found!\n");
+                }
              }
              else if(atoi(menu_input) == 4)
              {
