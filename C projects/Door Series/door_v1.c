@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
+struct player
+{
+    char inventory[5][25];
+};
 void make_lowercase(char input[])
 {
     for(int i = 0; i < strlen(input);i++)
@@ -108,6 +112,7 @@ void commit_command()
 
 int main(void)
 {
+    struct player main_player;
     int main_state = 0;
     int exit_main = 1;
     printf("WELCOME TO DOOR QUEST V.1.\n");
