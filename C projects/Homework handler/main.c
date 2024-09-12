@@ -13,26 +13,71 @@ struct homework
     time_t due;
     char status[25];
 };
+time_t atot(char ascii_time[20])
+{
+//String Format YYYY-MM-DDThh:mm:ss where T is a delimiter
+//              0123456789ABCDEFGHI
+time_t specified_time;
+
+struct tm atot_struct;
+memset(&atot_struct, 0, sizeof(struct tm));
+
+char string_year[5];
+char string_month[3];
+char string_day[3];
+
+strncpy(string_year,ascii_time,4);
+string_year[4] = '\0';
+strncpy(string_month,&ascii_time[5],2);
+string_month[2] = '\0';
+strncpy(string_day,&ascii_time[8],2);
+string_day[2] = '\0';
+
+atot_struct.tm_year = atoi(string_year) - 1900;
+atot_struct.tm_mon = atoi(string_month) - 1;
+atot_struct.tm_mday = atoi(string_day);
+
+
+char string_hour[3];
+char string_minute[3];
+char string_seconds[3];
+
+strncpy(string_hour,&ascii_time[11],2);
+string_hour[2] = '\0';
+strncpy(string_minute,&ascii_time[14],2);
+string_minute[2] = '\0';
+strncpy(string_seconds,&ascii_time[17],2);
+string_seconds[2] = '\0';
+
+atot_struct.tm_hour = atoi(string_hour);
+atot_struct.tm_min = atoi(string_minute);
+atot_struct.tm_sec = atoi(string_seconds);
+
+
+
+specified_time = mktime(&atot_struct);
+
+
+return specified_time;
+}
 
 int main()
 {
-    struct homework assignments[50];
+    struct homework assignments[150];
 
     FILE* input;
     input = fopen("homework.txt","r+");
     char* token;
-    char* end_str;
     char buffer[256];
     int array_number = 0;
     int line_count = 0;
-    while(fgets(buffer,100,input) != NULL) //Begin reading in file
+    while(fgets(buffer,256,input) != NULL) //Begin reading in file
     {
         line_count++;
         int count = 0;
-        token = strtok_r(buffer,",",&end_str);
+        token = strtok(buffer,",");
             while(token)
             {
-                char* end_tok;
                 if(count == 0) //Class name
                 {
                     strcpy(assignments[array_number].class_name,token);
@@ -43,47 +88,14 @@ int main()
                 }
                 else if(count == 2) //Due date
                 {
-                    char* time_token;
-                    time_token = strtok_r(token,"/",&end_tok);
-                    struct tm time;
-                    memset(&time, 0, sizeof(struct tm));
-                    time.tm_sec = 0;
-                    time.tm_min = 0;
-                    int time_count = 0;
-                    while(time_token)
-                    {
-                        if(time_count == 0)
-                        {
-                            time.tm_mon = atoi(time_token) - 1;
-                        }
-                        else if(time_count == 1)
-                        {
-                            time.tm_mday = atoi(time_token);
-                        }
-                        else if(time_count == 2)
-                        {
-                            time.tm_year = atoi(time_token) - 1900;
-                        }
-                        else if(time_count == 3)
-                        {
-                            time.tm_hour = atoi(time_token) - 1;
-                        }
-                        else if(time_count == 4)
-                        {
-                            time.tm_min = atoi(time_token);
-                        }
-                        time_token = strtok_r(NULL,"/",&end_tok);
-                        time_count++;
-
-                    }
-                    assignments[array_number].due = mktime(&time);
+                    assignments[array_number].due = atot(token);
                 }
                 else if(count == 3) //status
                 {
                     strcpy(assignments[array_number].status,token);
                 }
                 count++;
-                token = strtok_r(NULL,",",&end_str);
+                token = strtok(NULL,",");
             }
             array_number++;
     }
@@ -102,15 +114,15 @@ int main()
                 {
                     if(difftime(assignments[i].due,current_time) > 604800) //less then seven days
                     {
-                        printf("%s\t %s\t\t Due: \033[0;32m%s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%-30s %30s Due: \033[0;32m%40s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
                     else if((difftime(assignments[i].due,current_time) > 86400) && (difftime(assignments[i].due,current_time) < 604800))
                     {
-                        printf("%s\t %s\t\t Due: \033[0;33m%s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%-30s %30s Due: \033[0;33m%40s!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
                     else if(difftime(assignments[i].due,current_time) < 86400) //less then three days
                     {
-                        printf("%s\t %s\t\t Due: \033[0;31m%s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                        printf("%-30s %30s Due: \033[0;31m%40s!!\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
 
                 }
@@ -123,7 +135,7 @@ int main()
              {
                 if(strcmp(assignments[i].status,"completed\n") == 0)
                 {
-                    printf("%s\t %s\t\t Due: %s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
+                    printf("%-30s %30s Due: %40s\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
 
                 }
              }
@@ -204,7 +216,6 @@ int main()
                     if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
                     {
                         struct tm new_time;
-                        new_time.tm_year = 1980;
                         memset(&new_time, 0, sizeof(struct tm));
                         char buffer_time[10];
 
