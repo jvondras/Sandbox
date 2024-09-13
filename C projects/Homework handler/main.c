@@ -147,7 +147,7 @@ int main()
              printf("2. Move assignment to TODO\n");
              printf("3. Remove completed assignments\n");
              printf("4. Change due date\n");
-             printf("5. Quit\n");
+             printf("5. Save & Quit\n");
 
              fgets(menu_input,10,stdin);
 
@@ -228,6 +228,7 @@ int main()
                         printf("Enter year:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_year = atoi(buffer_time) - 1900;
+                        printf("If time is before November 3rd, subtract 1 hour from time!\n");
                         printf("Enter Hours (military time):\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_hour = atoi(buffer_time) - 1;
@@ -249,6 +250,24 @@ int main()
              else if(atoi(menu_input) == 5)
              {
                 fclose(input);
+                FILE* output;
+                output = fopen("output.txt","w");
+                char formated_string[256];
+
+
+                for(int i; i < line_count; i++)
+                {
+                    char formated_time[20];
+                    strftime(formated_time,sizeof(formated_time),"%Y-%m-%dT%H:%M:%S",localtime(&assignments[i].due));
+                    sprintf(formated_string,"%s,%s,%s,%s",assignments[i].class_name,assignments[i].assignment_name,formated_time,assignments[i].status);
+                    fputs(formated_string,output);
+
+                }
+                fclose(output);
+                remove("Homework.txt");
+                const char* old = "output.txt";
+                const char* newer = "Homework.txt";
+                int value = rename(old,newer);
                 return 0;
              }
         }
