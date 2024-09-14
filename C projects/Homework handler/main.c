@@ -70,6 +70,7 @@ int main()
     if(input == NULL)
     {
         perror("ERROR: ");
+        return 1;
     }
     char* token;
     char buffer[256];
@@ -172,7 +173,8 @@ int main()
                 }
                 if(found != 1)
                 {
-                    printf("Match not found!\n");
+                    system("cls");
+                    printf("Match not found!\n\n\n");
                 }
              }
              else if(atoi(menu_input) == 2)
@@ -192,19 +194,25 @@ int main()
                 }
                 if(found != 1)
                 {
-                    printf("Match not found!\n");
+                    printf("Match not found!\n\n\n");
                 }
              }
              else if(atoi(menu_input) == 3)
              {
+                 int found = 0;
 
                 for(int i = 0; i < line_count;i++)
                 {
                     if(strcmp("completed\n",assignments[i].status) == 0)
                     {
                         strcpy(assignments[i].status,"NULL");//Change time information here
+                        found = 1;
                     }
 
+                }
+                if(found != 1)
+                {
+                    printf("Match not found!\n\n\n");
                 }
 
              }
@@ -234,7 +242,7 @@ int main()
                         new_time.tm_year = atoi(buffer_time) - 1900;
                         printf("Enter Hours (military time):\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
-                        new_time.tm_hour = atoi(buffer_time) - 1;
+                        new_time.tm_hour = atoi(buffer_time)
                         printf("Enter Minutes:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_min = atoi(buffer_time);
