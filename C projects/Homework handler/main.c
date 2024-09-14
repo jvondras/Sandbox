@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-
 //Read in from file and put in stuct
 //read out new data to homework.txt
 
@@ -46,16 +45,17 @@ strncpy(string_hour,&ascii_time[11],2);
 string_hour[2] = '\0';
 strncpy(string_minute,&ascii_time[14],2);
 string_minute[2] = '\0';
-strncpy(string_seconds,&ascii_time[17],2);
+strncpy(string_seconds,&ascii_time[18],2);
 string_seconds[2] = '\0';
 
 atot_struct.tm_hour = atoi(string_hour);
 atot_struct.tm_min = atoi(string_minute);
 atot_struct.tm_sec = atoi(string_seconds);
 
-
+atot_struct.tm_isdst = -1;
 
 specified_time = mktime(&atot_struct);
+
 
 
 return specified_time;
@@ -67,6 +67,10 @@ int main()
 
     FILE* input;
     input = fopen("homework.txt","r+");
+    if(input == NULL)
+    {
+        perror("ERROR: ");
+    }
     char* token;
     char buffer[256];
     int array_number = 0;
@@ -228,7 +232,6 @@ int main()
                         printf("Enter year:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_year = atoi(buffer_time) - 1900;
-                        printf("If time is before November 3rd, subtract 1 hour from time!\n");
                         printf("Enter Hours (military time):\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_hour = atoi(buffer_time) - 1;
@@ -268,6 +271,7 @@ int main()
                 const char* old = "output.txt";
                 const char* newer = "Homework.txt";
                 int value = rename(old,newer);
+                remove("output.txt");
                 return 0;
              }
         }
