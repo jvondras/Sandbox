@@ -1,2 +1,63 @@
-PHYS 1443 Physics,Homework 3,2024-09-16T23:59:00,todo
-PHYS 1445,test1,2024-11-15T23:59:00,todo
+CSE 2312 Assembly,hw04,2024-09-19T23:59:00,todo
+PHYS 1443 Physics,Homework 3 and bonus,2024-09-16T23:59:00,todo
+CSE 2248 Algorithms,Homework 1,2024-09-16T23:59:00,todo
+CSE 1325 Object Oriented,P04,2024-09-17T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 08 Quiz,2024-09-17T23:59:00,todo
+HIST 1331 History,Essay 1 worksheet,2024-09-19T23:59:00,todo
+HIST 1331 History,Lesson 3 Quiz,2024-09-20T23:59:00,todo
+PHYS 1443 Physics,Homework 4 and bonus,2024-09-23T23:59:00,todo
+HIST 1331 History,Entry Ticket CA 3,2024-09-24T23:59:00,todo
+PHYS 1443 Physics,Exam 1,2024-09-25T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 10 quiz,2024-09-26T23:59:00,todo
+CSE 2312 Assembly,hw05,2024-09-26T23:59:00,todo
+PHYS 1443 Physics,Homework 5 and bonus,2024-09-30T23:59:00,todo
+HIST 1331 History,Review MOU,2024-09-30T23:59:00,todo
+CSE 1325 Object Oriented,P05,2024-10-01T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 11 Quiz,2024-10-01T23:59:00,todo
+CSE 3318 Algorithms,MIDTERM 1,2024-10-03T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 12 Quiz,2024-10-03T23:59:00,todo
+CSE 2312 Assembly,hw06,2024-10-03T23:59:00,todo
+HIST 1331 History,Essay 1,2024-10-03T23:59:00,todo
+HIST 1331 History,Lesson 4 Quiz,2024-10-04T23:59:00,todo
+PHYS 1443 Physics,Homework 6 and bonus,2024-10-07T23:59:00,todo
+CSE 1325 Object Oriented,P06,2024-10-08T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 13 Quiz,2024-10-08T23:59:00,todo
+HIST 1331 History,Entry Ticket CA 4,2024-10-08T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 14 Quiz,2024-10-10T23:59:00,todo
+CSE 2312 Assembly,hw07,2024-10-10T23:59:00,todo
+PHYS 1443 Physics,Homework 7 and bonus,2024-10-14T23:59:00,todo
+CSE 1325 Object Oriented,P07,2024-10-15T23:59:00,todo
+HIST 1331 History,Lesson 5 Quiz,2024-10-18T23:59:00,todo
+HIST 1331 History,Entry Ticket CA 5,2024-10-22T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 17 Quiz,2024-10-24T23:59:00,todo
+CSE 2312 Assembly,hw08,2024-10-24T23:59:00,todo
+PHYS 1443 Physics,Homework 8 and bonus,2024-10-28T23:59:00,todo
+HIST 1331 History,Review MOU,2024-10-28T23:59:00,todo
+CSE 3318 Algorithms,MIDTERM 2,2024-10-29T23:59:00,todo
+CSE 1325 Object Oriented,P08,2024-10-29T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 18 Quiz,2024-10-29T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 19 Quiz,2024-10-31T23:59:00,todo
+CSE 2312 Assembly,hw09,2024-10-31T23:59:00,todo
+HIST 1331 History,Essay 2 Worksheet,2024-10-31T23:59:00,todo
+HIST 1331 History,Lesson 6 Quiz,2024-11-01T23:59:00,todo
+PHYS 1443 Physics,Homework 9 and bonus,2024-11-04T23:59:00,todo
+CSE 1325 Object Oriented,P09,2024-11-05T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 20 Quiz,2024-11-05T23:59:00,todo
+HIST 1331 History,Entry Ticket CA 6,2024-11-05T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 21 Quiz,2024-11-07T23:59:00,todo
+CSE 2312 Assembly,Exam 3,2024-11-07T23:59:00,todo
+HIST 1331 History,Lesson 7 Quiz,2024-11-08T23:59:00,todo
+PHYS 1443 Physics,Homework 10 and bonus,2024-11-11T23:59:00,todo
+CSE 1325 Object Oriented,P10,2024-11-12T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 22 Quiz,2024-11-12T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 23 Quiz,2024-11-14T23:59:00,todo
+CSE 2312 Assembly,hw10,2024-11-14T23:59:00,todo
+HIST 1331 History,Essay 2,2024-11-14T23:59:00,todo
+HIST 1331 History,Lesson 8 Quiz,2024-11-15T23:59:00,todo
+PHYS 1443 Physics,Homework 11 and bonus,2024-11-18T23:59:00,todo
+CSE 1325 Object Oriented,P11,2024-11-19T23:59:00,todo
+CSE 1325 Object Oriented,Lecture 24 Quiz,2024-11-19T23:59:00,todo
+CSE 1325 Object Oriented,PE3 OPTIONAL,2024-11-19T23:59:00,todo
+CSE 3318 Algorithms,FINAL EXAM,2024-12-10T23:59:00,todo
+CSE 1325 Object Oriented,Final Grade,2024-12-11T23:59:00,todo
+PHYS 1443 Physics,Final Exam,2024-12-11T23:59:00,todo

@@ -111,13 +111,14 @@ int main()
         {
             time(&current_time);
             printf("Current Time: %s\n\n",ctime(&current_time));
+            printf("\033[0;32mGREEN: > 7 days\033[0m | \033[0;33m! YELLOW: 3 - 7 days\033[0m | \033[0;31m!! RED: < 3 days\033[0m\n\n");
              printf("To-do:\n");
              printf("=======================\n");
              for(int i = 0; i < line_count; i++)
              {
                 if(strcmp(assignments[i].status,"todo\n") == 0)
                 {
-                    if(difftime(assignments[i].due,current_time) > 604800) //less then seven days
+                    if(difftime(assignments[i].due,current_time) > 604800) //More then seven days
                     {
                         printf("%-30s %30s Due: \033[0;32m%40s\033[0m\n",assignments[i].class_name,assignments[i].assignment_name,ctime(&assignments[i].due));
                     }
@@ -194,6 +195,7 @@ int main()
                 }
                 if(found != 1)
                 {
+                    system("cls");
                     printf("Match not found!\n\n\n");
                 }
              }
@@ -212,6 +214,7 @@ int main()
                 }
                 if(found != 1)
                 {
+                    system("cls");
                     printf("Match not found!\n\n\n");
                 }
 
@@ -223,9 +226,11 @@ int main()
                 int found = 0;
                 printf("Enter Assignment Name: \n");
                 fgets(search,50,stdin);
+
+                search[strcspn(search,"\n")] = '\0';
                 for(int i = 0; i < line_count;i++)
                 {
-                    if(strncmp(search,assignments[i].assignment_name,strlen(assignments[i].assignment_name)) == 0)
+                    if(strcmp(search,assignments[i].assignment_name) == 0)
                     {
                         struct tm new_time;
                         memset(&new_time, 0, sizeof(struct tm));
@@ -233,19 +238,25 @@ int main()
 
                         printf("Enter month:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        buffer_time[strcspn(buffer_time,"\n")] = '\0';
                         new_time.tm_mon = atoi(buffer_time) -1;
                         printf("Enter day:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        buffer_time[strcspn(buffer_time,"\n")] = '\0';
                         new_time.tm_mday = atoi(buffer_time);
                         printf("Enter year:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        buffer_time[strcspn(buffer_time,"\n")] = '\0';
                         new_time.tm_year = atoi(buffer_time) - 1900;
                         printf("Enter Hours (military time):\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
-                        new_time.tm_hour = atoi(buffer_time)
+                        buffer_time[strcspn(buffer_time,"\n")] = '\0';
+                        new_time.tm_hour = atoi(buffer_time);
                         printf("Enter Minutes:\n");
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
+                        buffer_time[strcspn(buffer_time,"\n")] = '\0';
                         new_time.tm_min = atoi(buffer_time);
+                        new_time.tm_sec = 0;
 
                         new_time.tm_isdst = -1;
 
@@ -257,7 +268,8 @@ int main()
 
                 if(found != 1)
                 {
-                    printf("Match not found!\n");
+                    system("cls");
+                    printf("Match not found!\n\n\n");
                 }
 
              }
