@@ -239,7 +239,7 @@ int main()
                         strcpy(buffer_time,fgets(buffer_time,10,stdin));
                         new_time.tm_min = atoi(buffer_time);
 
-                        new_time.tm_isdst = - 1;
+                        new_time.tm_isdst = -1;
 
                         assignments[i].due = mktime(&new_time);
                         found = 1;
